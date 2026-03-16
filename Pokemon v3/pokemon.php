@@ -20,9 +20,15 @@ class Pokemon {
     return $this->nombre;
 }
 
-    public function Atacar(){
-        return $this->nombre . " ataca con " . $this->ataque . " y causa daño.";
+public function Atacar(Pokemon $rival){
+        $daño = rand(25,35);
+        $rival->recibirDaño($daño);
+        return $this->nombre . " ataca con " . $this->ataque . " y causa " . $daño . " puntos de daño a " . $rival->getNombre() . ".";
     }
+    public function recibirDaño($daño){
+    $this->vida -= $daño;
+    if($this->vida < 0) $this->vida = 0; // Evita vida negativa
+}
     
 
     public function Evolucionar(){
