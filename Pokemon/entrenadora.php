@@ -8,9 +8,26 @@ class Entrenadora{
         $this->pokemons = [];
     }
 
-    public function CazarPokemon($pokemon){
-        $this->pokemons[] = $pokemon;
-    }
+    public function getPokemons() {
+        return $this->pokemons;
+        }
+
+    public function CazarPokemon(Pokemon $pokemon) {
+            // Verificamos si el equipo tiene espacio (máximo 6 como en los juegos)
+            if (count($this->pokemons) < 6) {
+                $suerte = rand(1, 100);
+
+                if ($suerte > 30) { // 70% de probabilidad de éxito
+                    $this->pokemons[] = $pokemon;
+                    echo "<p>¡Hecho!" . $this->nombre . " ha capturado a " . $pokemon->getNombre() . "</p>";
+                } else {
+                    echo "<p>¡Oh no! El Pokémon <b>" . $pokemon->getNombre() . "</b> ha huído...</p>";
+                }
+
+            } else {
+                echo "<p>¡El equipo está lleno! No puedes capturar más de 6 Pokémon.</p>";
+            }
+        }
 
     public function getNombre() { 
         return $this->nombre; 
