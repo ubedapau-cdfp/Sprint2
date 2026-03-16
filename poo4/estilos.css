@@ -117,7 +117,7 @@ input[type=text], input[type=number]{
 }
 
 .imagen-pokemon img {
-    width: 120px;              /* Tamaño de la imagen */
+    width: 120px;             /* Tamaño de la imagen */
     height: auto;
     margin-left: 20px;         /* Espacio entre el texto y la foto */
     filter: drop-shadow(2px 4px 6px black); /* Sombra para que la imagen destaque */
@@ -129,4 +129,23 @@ input[type=text], input[type=number]{
     background: #ccc;
     margin: 20px 0;
 }
+/* ── Detalle pokémon ───────────────────── */
+.tarjeta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+}
 
+.tarjeta-datos {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.tarjeta-imagen img {
+    width: 500px;        /* ← cambia este valor a lo que quieras */
+    max-width: 500px;
+    height: auto;
+    filter: drop-shadow(2px 4px 6px black);
+}
