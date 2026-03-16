@@ -1,5 +1,5 @@
 <?php
-require_once 'pokemon.php';
+require_once 'Pokemon.php';
 session_start();
 ?>
 
@@ -9,22 +9,18 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Pokemon</title>
-    <link rel="icon" type="image/x-icon" href="img/pokeball.png">
     <link rel="stylesheet" href="estilos.css">
 </head>
-<body class='fondo-segundo'>
+<body>
     <section>
         <h1>Crear Pokemon</h1>
-        <form method="POST" action="" enctype="multipart/form-data">
-            <input type="radio" id="deldata" name="opcion1" value="deldata">
-            <label for="deldata">Borrar datos</label>
-            <p></p>
+        <form method="POST" action="detalle.php" enctype="multipart/form-data">
             <label for="nombre"><p>Nombre</p></label>
             <input type="text" name="nombre" id="nombre">
 
             <!-- DESPLEGABLE ELEMENTO (tipo primario) -->
             <label for="elemento"><p>Elemento</p></label>
-            <select name="elemento" id="elemento" class='select'>
+            <select name="elemento" id="elemento">
                 <option value="">-- Selecciona un elemento --</option>
                 <option value="Fuego"> Fuego</option>
                 <option value="Agua"> Agua</option>
@@ -48,7 +44,7 @@ session_start();
 
             <!-- DESPLEGABLE TIPO (categoría del Pokémon) -->
             <label for="tipo"><p>Tipo</p></label>
-            <select name="tipo" id="tipo" class='select'>
+            <select name="tipo" id="tipo">
                 <option value="">-- Selecciona un tipo --</option>
                 <optgroup label="Por origen">
                     <option value="Inicial">Inicial</option>
@@ -84,7 +80,7 @@ session_start();
             <label for="imagen"><p>Imagen del Pokémon</p></label>
             <input type="file" name="imagen" id="imagen" accept="image/*"><p></p>
 
-            <input type="submit" value="Crear Pokémon">
+            <input type="submit" value="Crear">
         </form>
     </section>
 
@@ -93,12 +89,6 @@ session_start();
     if (!isset($_SESSION["pokemons"])) {
         $_SESSION["pokemons"] = [];
     }
-    
-    if (isset($_POST['opcion1'])&&$_POST['opcion1']==='deldata'){ 
-        destruirDatos(); 
-        $_SESSION['pokemons']=[];
-        $mensaje="Datos borrados.";
-        }
 
     if (isset($_POST["nombre"], $_POST["elemento"], $_POST["tipo"], $_POST["ataque"])) {
         $nombre      = $_POST["nombre"];
@@ -161,36 +151,20 @@ session_start();
         <?php
         if (count($_SESSION["pokemons"]) > 0) {
             foreach ($_SESSION["pokemons"] as $pokemon) {
-        echo '<div class="card-pokemon">';
-    
-        // Contenedor de la izquierda (Texto)
-        echo '<div class="info-pokemon">';
-        echo $pokemon->mostrarInfo();
-        echo '</div>';
-
-    // Contenedor de la derecha (Imagen)
-            if (method_exists($pokemon, 'getImagen') && $pokemon->getImagen()) {
-                echo '<section class="imagen-pokemon">';
+                echo $pokemon->mostrarInfo();
+                if (method_exists($pokemon, 'getImagen') && $pokemon->getImagen()) {
                     echo '<img src="' . htmlspecialchars($pokemon->getImagen()) . '" 
-                            alt="' . htmlspecialchars($pokemon->getNombre()) . '">';
-                echo '</section>';
+                               alt="' . htmlspecialchars($pokemon->getNombre()) . '" 
+                               style="width:150px; height:auto;">';
                 }
-
-                echo '</div>'; 
-                echo '<hr class="separador">'; 
             }
         } else {
             echo "<p>No hay Pokémon creados todavía</p>";
         }
-
-        function destruirDatos(){ 
-            $_SESSION['pokemons']=[];  
-        }
         ?>
     </section>
-<section>
-    <a class='button' href="index.php">Ir a gestión</a>
-    <a class='button' href="crearentrenadora.php">Ir a creación de entrenadoras</a>
-</section>
+
+    <a href="gestion.php">Ir a gestión</a>
+    <a href="crearentrenadora.php">Ir a creación de entrenadoras</a>
 </body>
 </html>
