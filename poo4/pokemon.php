@@ -7,6 +7,7 @@ class Pokemon {
     private $nivel;
     private $vida;
     private $vida_ataque;
+    private $imagen;
 
     public function __construct($nombre, $elemento, $tipo, $ataque){
         $this->nombre = $nombre;
@@ -22,6 +23,8 @@ class Pokemon {
         $this->vida=$this->vida - $danio;
         return $this->vida;
     }
+
+
     public function getNombre() {
     return $this->nombre;
 }

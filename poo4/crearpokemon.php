@@ -9,18 +9,22 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Pokemon</title>
+    <link rel="icon" type="image/x-icon" href="img/pokeball.png">
     <link rel="stylesheet" href="estilos.css">
 </head>
-<body>
+<body class='fondo-segundo'>
     <section>
         <h1>Crear Pokemon</h1>
         <form method="POST" action="" enctype="multipart/form-data">
+            <input type="radio" id="deldata" name="opcion1" value="deldata">
+            <label for="deldata">Borrar datos</label>
+            <p></p>
             <label for="nombre"><p>Nombre</p></label>
             <input type="text" name="nombre" id="nombre">
 
             <!-- DESPLEGABLE ELEMENTO (tipo primario) -->
             <label for="elemento"><p>Elemento</p></label>
-            <select name="elemento" id="elemento">
+            <select name="elemento" id="elemento" class='select'>
                 <option value="">-- Selecciona un elemento --</option>
                 <option value="Fuego"> Fuego</option>
                 <option value="Agua"> Agua</option>
@@ -44,7 +48,7 @@ session_start();
 
             <!-- DESPLEGABLE TIPO (categoría del Pokémon) -->
             <label for="tipo"><p>Tipo</p></label>
-            <select name="tipo" id="tipo">
+            <select name="tipo" id="tipo" class='select'>
                 <option value="">-- Selecciona un tipo --</option>
                 <optgroup label="Por origen">
                     <option value="Inicial">Inicial</option>
@@ -80,7 +84,7 @@ session_start();
             <label for="imagen"><p>Imagen del Pokémon</p></label>
             <input type="file" name="imagen" id="imagen" accept="image/*"><p></p>
 
-            <input type="submit" value="Crear">
+            <input type="submit" value="Crear Pokémon">
         </form>
     </section>
 
@@ -89,6 +93,12 @@ session_start();
     if (!isset($_SESSION["pokemons"])) {
         $_SESSION["pokemons"] = [];
     }
+    
+    if (isset($_POST['opcion1'])&&$_POST['opcion1']==='deldata'){ 
+        destruirDatos(); 
+        $_SESSION['pokemons']=[];
+        $mensaje="Datos borrados.";
+        }
 
     if (isset($_POST["nombre"], $_POST["elemento"], $_POST["tipo"], $_POST["ataque"])) {
         $nombre      = $_POST["nombre"];
@@ -151,20 +161,36 @@ session_start();
         <?php
         if (count($_SESSION["pokemons"]) > 0) {
             foreach ($_SESSION["pokemons"] as $pokemon) {
-                echo $pokemon->mostrarInfo();
-                if (method_exists($pokemon, 'getImagen') && $pokemon->getImagen()) {
+        echo '<div class="card-pokemon">';
+    
+        // Contenedor de la izquierda (Texto)
+        echo '<div class="info-pokemon">';
+        echo $pokemon->mostrarInfo();
+        echo '</div>';
+
+    // Contenedor de la derecha (Imagen)
+            if (method_exists($pokemon, 'getImagen') && $pokemon->getImagen()) {
+                echo '<section class="imagen-pokemon">';
                     echo '<img src="' . htmlspecialchars($pokemon->getImagen()) . '" 
-                               alt="' . htmlspecialchars($pokemon->getNombre()) . '" 
-                               style="width:150px; height:auto;">';
+                            alt="' . htmlspecialchars($pokemon->getNombre()) . '">';
+                echo '</section>';
                 }
+
+                echo '</div>'; 
+                echo '<hr class="separador">'; 
             }
         } else {
             echo "<p>No hay Pokémon creados todavía</p>";
         }
+
+        function destruirDatos(){ 
+            $_SESSION['pokemons']=[];  
+        }
         ?>
     </section>
-
-    <a href="index.php">Ir a gestión</a>
-    <a href="crearentrenadora.php">Ir a creación de entrenadoras</a>
+<section>
+    <a class='button' href="index.php">Ir a gestión</a>
+    <a class='button' href="crearentrenadora.php">Ir a creación de entrenadoras</a>
+</section>
 </body>
 </html>

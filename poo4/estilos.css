@@ -78,7 +78,7 @@ section {
 }
 
 /* estilos para las botoneras */
-.button, .select, [type=submit], .select{
+.button, .select, [type=submit], .select, [type=file]{
     font-family: 'Gill Sans','Segoe UI';
     background-color: #ff0000;
     border:none;
@@ -91,7 +91,7 @@ section {
 }
 
 /* hover para los botones (NO selects) */
-.button:hover, [type=submit]:hover{
+.button:hover, [type=submit]:hover, [type=file]:hover{
     background-color:#e94b4b;
 }
 
@@ -99,3 +99,34 @@ section {
 input[type=text], input[type=number]{
     font-family: 'Gill Sans Medium','Segoe UI';
 }
+
+.card-pokemon {
+    display: flex;             /* Activa el modo flexible */
+    justify-content: space-between; /* Texto a la izquierda, imagen a la derecha */
+    align-items: center;       /* Centra verticalmente ambos elementos */
+    background: rgba(255, 255, 255, 0.8); /* Un fondo ligero para que se lea mejor */
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 500px;          /* Ajusta el ancho a tu gusto */
+}
+
+.info-pokemon {
+    flex: 1;                   /* Hace que el texto use el espacio disponible */
+    text-align: left;
+}
+
+.imagen-pokemon img {
+    width: 120px;              /* Tamaño de la imagen */
+    height: auto;
+    margin-left: 20px;         /* Espacio entre el texto y la foto */
+    filter: drop-shadow(2px 4px 6px black); /* Sombra para que la imagen destaque */
+}
+
+.separador {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+}
+
